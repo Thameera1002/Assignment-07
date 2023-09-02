@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 class Test {
+    public static String[] odrID = new String[0];
     public static String[] phoneNo = new String[0];
     public static String[] tSizes = new String[0];
     public static int[] qt = new int[0];
@@ -12,6 +13,7 @@ class Test {
         String phoneNumber;
         String tshirtSize;
         int qty;
+        String orderID;
         String mainHeader = "\r\n" +
                 " /$$$$$$$$          " +
                 "       /$$       /$$" +
@@ -96,7 +98,7 @@ class Test {
                 int count = 1;
                 M1L1: do {
                     String padded = String.format("%05d", count);
-                    String orderID = "ODR#" + padded;
+                    orderID = "ODR#" + padded;
                     clearConsole();
                     String placeOrderHeader = "\r\n" +
                             "  _____  _          " +
@@ -176,6 +178,8 @@ class Test {
                         System.out.print("Do you want to place this order? (y/n) : ");
                         String verifyOrderPlace = input.next();
                         if (verifyOrderPlace.equalsIgnoreCase("y")) {
+                            odrID = increaseStrArraySize(odrID);
+                            odrID[count - 1] = orderID;
                             phoneNo = increaseStrArraySize(phoneNo);
                             phoneNo[count - 1] = phoneNumber;
                             tSizes = increaseStrArraySize(tSizes);
@@ -241,11 +245,11 @@ class Test {
                             "__\\___/|_| |_| |_|" +
                             "\\___|_|   ";
 
-                    System.out.println(searchCustomerHeader);
-                    System.out.println(
-                            "_________________________________________________________________________________");
-
                     J1: do {
+                        clearConsole();
+                        System.out.println(searchCustomerHeader);
+                        System.out.println(
+                                "_________________________________________________________________________________");
 
                         System.out.print("Enter Customer Phone Number \t\t:\t");
                         phoneNumber = input.next();
@@ -273,16 +277,10 @@ class Test {
                                 System.out.print("Do you want to search phone number again ? (y/n) : ");
                                 String checkStr = input.next();
                                 if (checkStr.equalsIgnoreCase("y")) {
-                                    // Move the cursor up 3 lines
-                                    System.out.print("\033[3A");
-                                    // Clear the lines
-                                    System.out.print("\033[0J");
                                     continue J1;
                                 } else {
                                     continue L1;
                                 }
-                            } else {
-                                break;
                             }
 
                         } else {
@@ -300,45 +298,97 @@ class Test {
                             }
                         }
 
+                        int S = 0, XS = 0, M = 0, L = 0, XL = 0, XXL = 0;
+
+                        for (int i = 0; i < countArr.length; i++) {
+                            tshirtSize = tSizes[countArr[i]];
+                            qty = qt[countArr[i]];
+                            if (tshirtSize.equalsIgnoreCase("S"))
+                                S = S + qty;
+                            else if (tshirtSize.equalsIgnoreCase("XS"))
+                                XS = XS + qty;
+                            else if (tshirtSize.equalsIgnoreCase("M"))
+                                M = M + qty;
+                            else if (tshirtSize.equalsIgnoreCase("L"))
+                                L = L + qty;
+                            else if (tshirtSize.equalsIgnoreCase("XL"))
+                                XL = XL + qty;
+                            else if (tshirtSize.equalsIgnoreCase("XXL"))
+                                XXL = XXL + qty;
+                        }
+                        int totalAmount = calculateAmount("S", S) + calculateAmount("XS", XS) +
+                                calculateAmount("M", M) + calculateAmount("L", L) + calculateAmount("XL", XL)
+                                + calculateAmount("XXL", XXL);
+                        System.out.println(
+                                "+---------------+-------------------------------+-------------------------------+");
+                        System.out.println("|\tSize\t|\t\tQty\t\t|\t\tAmount\t\t|");
+                        System.out.println(
+                                "+---------------+-------------------------------+-------------------------------+");
+                        System.out.println("|\tS\t|\t\t" + S + "\t\t|\t\t" + calculateAmount("S", S) + "\t\t|");
+                        System.out.println("|\tXS\t|\t\t" + XS + "\t\t|\t\t" + calculateAmount("XS", XS) + "\t\t|");
+                        System.out.println("|\tM\t|\t\t" + M + "\t\t|\t\t" + calculateAmount("M", M) + "\t\t|");
+                        System.out.println("|\tL\t|\t\t" + L + "\t\t|\t\t" + calculateAmount("L", L) + "\t\t|");
+                        System.out.println("|\tXL\t|\t\t" + XL + "\t\t|\t\t" + calculateAmount("XL", XL) + "\t\t|");
+                        System.out.println("|\tXXL\t|\t\t" + XXL + "\t\t|\t\t" + calculateAmount("XXL", XXL) + "\t\t|");
+                        System.out.println(
+                                "+-----------------------------------------------+-------------------------------+");
+                        System.out.println("|\t\tTotal Amount\t\t\t|\t\t" + totalAmount + "\t\t|");
+                        System.out.println(
+                                "+-----------------------------------------------+-------------------------------+");
+
+                        do {
+                            System.out.print("Do you want to search another customer report ? (y/n) : ");
+                            String checkReSearchPhone = input.next();
+                            if (checkReSearchPhone.equalsIgnoreCase("y")) {
+                                // Move the cursor up 3 lines
+                                System.out.print("\033[3A");
+                                // Clear the lines
+                                System.out.print("\033[0J");
+                                continue J1;
+                            } else {
+                                continue L1;
+                            }
+                        } while (true);
                     } while (true);
-                    int S = 0, XS = 0, M = 0, L = 0, XL = 0, XXL = 0;
-
-                    for (int i = 0; i < countArr.length; i++) {
-                        tshirtSize = tSizes[countArr[i]];
-                        qty = qt[countArr[i]];
-                        if (tshirtSize.equalsIgnoreCase("S"))
-                            S = S + qty;
-                        else if (tshirtSize.equalsIgnoreCase("XS"))
-                            XS = XS + qty;
-                        else if (tshirtSize.equalsIgnoreCase("M"))
-                            M = M + qty;
-                        else if (tshirtSize.equalsIgnoreCase("L"))
-                            L = L + qty;
-                        else if (tshirtSize.equalsIgnoreCase("XL"))
-                            XL = XL + qty;
-                        else if (tshirtSize.equalsIgnoreCase("XXL"))
-                            XXL = XXL + qty;
-                    }
-                    int totalAmount = calculateAmount("S", S) + calculateAmount("XS", XS) +
-                            calculateAmount("M", M) + calculateAmount("L", L) + calculateAmount("XL", XL)
-                            + calculateAmount("XXL", XXL);
-                    System.out.println("+---------------+-------------------------------+-------------------------------+");
-                    System.out.println("|\tSize\t|\t\tQty\t\t|\t\tAmount\t\t|");
-                    System.out.println("+---------------+-------------------------------+-------------------------------+");
-                    System.out.println("|\tS\t|\t\t" + S + "\t\t|\t\t" + calculateAmount("S", S) + "\t\t|");
-                    System.out.println("|\tXS\t|\t\t" + XS + "\t\t|\t\t" + calculateAmount("XS", XS) + "\t\t|");
-                    System.out.println("|\tM\t|\t\t" + M + "\t\t|\t\t" + calculateAmount("M", M) + "\t\t|");
-                    System.out.println("|\tL\t|\t\t" + L + "\t\t|\t\t" + calculateAmount("L", L) + "\t\t|");
-                    System.out.println("|\tXL\t|\t\t" + XL + "\t\t|\t\t" + calculateAmount("XL", XL) + "\t\t|");
-                    System.out .println("|\tXXL\t|\t\t" + XXL + "\t\t|\t\t" + calculateAmount("XXL", XXL) + "\t\t|");
-                    System.out.println("+-----------------------------------------------+-------------------------------+");
-                    System.out.println("|\t\tTotal Amount\t\t\t|\t\t" + totalAmount + "\t\t|");
-                    System.out.println("+-----------------------------------------------+-------------------------------+");
-
-                    break;
                 } while (true);
 
             } else if (mainMenuNum == 3) {
+                String searchOrderHeader = "\r\n" +
+                        "   _____            " +
+                        "         _        __" +
+                        "__          _       " +
+                        "    \r\n" +
+                        "  / ____|           " +
+                        "        | |      / _" +
+                        "_ \\        | |     " +
+                        "     \r\n" +
+                        " | (___   ___  __ _ " +
+                        "_ __ ___| |__   | | " +
+                        " | |_ __ __| | ___ _" +
+                        " __ \r\n" +
+                        "  \\___ \\ / _ \\/ _" +
+                        "` | \'__/ __| \'_ \\" +
+                        "  | |  | | \'__/ _` " +
+                        "|/ _ \\ \'__|\r\n" +
+                        "  ____) |  __/ (_| |" +
+                        " | | (__| | | | | |_" +
+                        "_| | | | (_| |  __/ " +
+                        "|   \r\n" +
+                        " |_____/ \\___|\\__," +
+                        "_|_|  \\___|_| |_|  " +
+                        "\\____/|_|  \\__,_|" +
+                        "\\___|_|   \r\n";
+
+                K1: do {
+                    clearConsole();
+                    System.out.println(searchOrderHeader);
+                    System.out.println(
+                            "_________________________________________________________________________________");
+
+                    System.out.print("Enter Order ID \t\t:\t");
+                    orderID = input.next();
+
+                } while (true);
 
             } else if (mainMenuNum == 4) {
 
