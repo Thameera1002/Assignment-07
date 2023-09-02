@@ -322,20 +322,20 @@ class Test {
                     int totalAmount = calculateAmount("S", S) + calculateAmount("XS", XS) +
                             calculateAmount("M", M) + calculateAmount("L", L) + calculateAmount("XL", XL)
                             + calculateAmount("XXL", XXL);
-                    System.out.println("+----------+-----------+----------------------+");
-                    System.out.println("|   Size   |    Qty    |        Amount        |");
-                    System.out.println("+----------+-----------+----------------------+");
-                    System.out.println("|   S      |     " + S + "     |  " + calculateAmount("S", S) + "\t\t\t|");
-                    System.out.println("|   XS     |     " + XS + "     |   " + calculateAmount("XS", XS) + "\t\t\t|");
-                    System.out.println("|   M      |     " + M + "     |    " + calculateAmount("M", M) + "\t\t\t|");
-                    System.out.println("|   L      |     " + L + "     |   " + calculateAmount("L", L) + "\t\t\t|");
-                    System.out.println("|   XL     |     " + XL + "     |    " + calculateAmount("XL", XL) + "\t\t\t|");
-                    System.out
-                            .println("|   XXL    |     " + XXL + "     |   " + calculateAmount("XXL", XXL) + "\t\t\t|");
-                    System.out.println("+----------+-----------+----------------------+");
-                    System.out.println("|    Total Amount      |    " + totalAmount + "\t\t\t|");
-                    System.out.println("+----------+-----------+----------------------+");
+                    System.out.println("+---------------+-------------------------------+-------------------------------+");
+                    System.out.println("|\tSize\t|\t\tQty\t\t|\t\tAmount\t\t|");
+                    System.out.println("+---------------+-------------------------------+-------------------------------+");
+                    System.out.println("|\tS\t|\t\t" + S + "\t\t|\t\t" + calculateAmount("S", S) + "\t\t|");
+                    System.out.println("|\tXS\t|\t\t" + XS + "\t\t|\t\t" + calculateAmount("XS", XS) + "\t\t|");
+                    System.out.println("|\tM\t|\t\t" + M + "\t\t|\t\t" + calculateAmount("M", M) + "\t\t|");
+                    System.out.println("|\tL\t|\t\t" + L + "\t\t|\t\t" + calculateAmount("L", L) + "\t\t|");
+                    System.out.println("|\tXL\t|\t\t" + XL + "\t\t|\t\t" + calculateAmount("XL", XL) + "\t\t|");
+                    System.out .println("|\tXXL\t|\t\t" + XXL + "\t\t|\t\t" + calculateAmount("XXL", XXL) + "\t\t|");
+                    System.out.println("+-----------------------------------------------+-------------------------------+");
+                    System.out.println("|\t\tTotal Amount\t\t\t|\t\t" + totalAmount + "\t\t|");
+                    System.out.println("+-----------------------------------------------+-------------------------------+");
 
+                    break;
                 } while (true);
 
             } else if (mainMenuNum == 3) {
