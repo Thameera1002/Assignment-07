@@ -4,6 +4,7 @@ class Test {
     public static String[] odrID = new String[0];
     public static String[] phoneNo = new String[0];
     public static String[] tSizes = new String[0];
+    public static String[] odrStatus = new String[0];
     public static int[] qt = new int[0];
     public static int[] countArr = new int[0];
     public static int[] noCountArr = new int[0];
@@ -14,6 +15,7 @@ class Test {
         String tshirtSize;
         int qty;
         String orderID;
+        String status;
         String mainHeader = "\r\n" +
                 " /$$$$$$$$          " +
                 "       /$$       /$$" +
@@ -186,6 +188,8 @@ class Test {
                             tSizes[count - 1] = tshirtSize;
                             qt = increaseIntArraySize(qt);
                             qt[count - 1] = qty;
+                            odrStatus = increaseStrArraySize(odrStatus);
+                            odrStatus[count - 1] = "Processing";
                             System.out.println("\tOrder Placed..!");
 
                             System.out.print("Do you want to place another order? (y/n) : ");
@@ -340,10 +344,6 @@ class Test {
                             System.out.print("Do you want to search another customer report ? (y/n) : ");
                             String checkReSearchPhone = input.next();
                             if (checkReSearchPhone.equalsIgnoreCase("y")) {
-                                // Move the cursor up 3 lines
-                                System.out.print("\033[3A");
-                                // Clear the lines
-                                System.out.print("\033[0J");
                                 continue J1;
                             } else {
                                 continue L1;
@@ -387,6 +387,56 @@ class Test {
 
                     System.out.print("Enter Order ID \t\t:\t");
                     orderID = input.next();
+
+                    int position = 0;
+                    int nCnt = 1;
+                    noCountArr = new int[0];
+
+                    for (int i = 0; i < odrID.length; i++) {
+                        if (!(odrID[i].contains(orderID))) {
+                            noCountArr = increaseIntArraySize(noCountArr);
+                            noCountArr[nCnt - 1] = i;
+                            nCnt++;
+                        } else {
+                            if (odrID[i].equalsIgnoreCase(orderID)) {
+                                position = i;
+                                break;
+                            }
+                        }
+
+                    }
+                    if (odrID.length == noCountArr.length) {
+                        System.out.println("\tInvalid Order ID..... Try Again");
+                        System.out.print("Do you want to search order ID again ? (y/n) : ");
+                        String checkStr = input.next();
+                        if (checkStr.equalsIgnoreCase("y")) {
+                            continue K1;
+                        } else {
+                            continue L1;
+                        }
+                    }
+
+                    phoneNumber = phoneNo[position];
+                    tshirtSize = tSizes[position];
+                    qty = qt[position];
+                    int amount = calculateAmount(tshirtSize, qty);
+                    status = odrStatus[position];
+
+                    System.out.println("\nPhone Number\t:\t" + phoneNumber);
+                    System.out.println("Size\t\t:\t" + tshirtSize);
+                    System.out.println("QTY\t\t:\t" + qty);
+                    System.out.println("Amount\t\t:\t" + amount);
+                    System.out.println("Status\t\t:\t" + status);
+
+                    do {
+                        System.out.print("Do you want to search another order ? (y/n) : ");
+                        String checkReSearchPhone = input.next();
+                        if (checkReSearchPhone.equalsIgnoreCase("y")) {
+                            continue K1;
+                        } else {
+                            continue L1;
+                        }
+                    } while (true);
 
                 } while (true);
 
