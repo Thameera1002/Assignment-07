@@ -441,8 +441,127 @@ class Test {
                 } while (true);
 
             } else if (mainMenuNum == 4) {
-
+                continue L1;
             } else if (mainMenuNum == 5) {
+                String orderStatusHeader = "   ____          _  " +
+                        "            _____ _ " +
+                        "       _            " +
+                        " \r\n" +
+                        "  / __ \\        | |" +
+                        "            / ____| " +
+                        "|      | |          " +
+                        "  \r\n" +
+                        " | |  | |_ __ __| | " +
+                        "___ _ __  | (___ | |" +
+                        "_ __ _| |_ _   _ ___" +
+                        " \r\n" +
+                        " | |  | | \'__/ _` |" +
+                        "/ _ \\ \'__|  \\___ " +
+                        "\\| __/ _` | __| | |" +
+                        " / __|\r\n" +
+                        " | |__| | | | (_| | " +
+                        " __/ |     ____) | |" +
+                        "| (_| | |_| |_| \\__" +
+                        " \\\r\n" +
+                        "  \\____/|_|  \\__,_" +
+                        "|\\___|_|    |_____/" +
+                        " \\__\\__,_|\\__|\\_" +
+                        "_,_|___/\r\n" +
+                        "                    " +
+                        "                    " +
+                        "                    " +
+                        " ";
+                M1: do {
+                    clearConsole();
+                    System.out.println(orderStatusHeader);
+                    System.out.println(
+                            "_________________________________________________________________________________");
+
+                    System.out.print("Enter Order ID \t\t:\t");
+                    orderID = input.next();
+
+                    int position = 0;
+                    int nCnt = 1;
+                    noCountArr = new int[0];
+
+                    for (int i = 0; i < odrID.length; i++) {
+                        if (!(odrID[i].contains(orderID))) {
+                            noCountArr = increaseIntArraySize(noCountArr);
+                            noCountArr[nCnt - 1] = i;
+                            nCnt++;
+                        } else {
+                            if (odrID[i].equalsIgnoreCase(orderID)) {
+                                position = i;
+                                break;
+                            }
+                        }
+
+                    }
+                    if (odrID.length == noCountArr.length) {
+                        System.out.println("\tInvalid Order ID..... Try Again");
+                        System.out.print("Do you want to search order ID again ? (y/n) : ");
+                        String checkStr = input.next();
+                        if (checkStr.equalsIgnoreCase("y")) {
+                            continue M1;
+                        } else {
+                            continue L1;
+                        }
+                    }
+
+                    phoneNumber = phoneNo[position];
+                    tshirtSize = tSizes[position];
+                    qty = qt[position];
+                    int amount = calculateAmount(tshirtSize, qty);
+                    status = odrStatus[position];
+
+                    System.out.println("\nPhone Number\t:\t" + phoneNumber);
+                    System.out.println("Size\t\t:\t" + tshirtSize);
+                    System.out.println("QTY\t\t:\t" + qty);
+                    System.out.println("Amount\t\t:\t" + amount);
+                    System.out.println("Status\t\t:\t" + status);
+
+                    if (status.equalsIgnoreCase("Processing")) {
+                        System.out.print("Do you want to change this order status ? (y/n) : ");
+                        String checkOrderStstusChange = input.next();
+                        ML1: do {
+                            if (checkOrderStstusChange.equalsIgnoreCase("y")) {
+                                System.out.println("\n\t[1] Order Delivering");
+                                System.out.println("\n\t[2] Order Delivered");
+                                System.out.print("Enter an option : ");
+                                int changeItem = input.nextInt();
+                                if (changeItem == 1) {
+                                    odrStatus[position] = "Order Delivering";
+                                    break;
+                                } else if (changeItem == 2) {
+                                    odrStatus[position] = "Order Delivered";
+                                    break;
+                                } else {
+                                    // Move the cursor up 3 lines
+                                    System.out.print("\033[1A");
+                                    // Clear the lines
+                                    System.out.print("\033[0J");
+                                    System.out.println("\tInvalid Input...");
+                                    continue ML1;
+
+                                }
+                            } else {
+                                continue L1;
+                            }
+                        } while (true);
+
+                    }
+
+                    do {
+                        System.out.print("Do you want to search another order ? (y/n) : ");
+                        String checkReSearchPhone = input.next();
+                        if (checkReSearchPhone.equalsIgnoreCase("y")) {
+                            continue M1;
+                        } else {
+                            continue L1;
+                        }
+                    } while (true);
+
+                } while (true);
 
             } else if (mainMenuNum == 6) {
 
