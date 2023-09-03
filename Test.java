@@ -440,7 +440,101 @@ class Test {
                 } while (true);
 
             } else if (mainMenuNum == 4) {
-                continue L1;
+                String reportsHeader = "\r\n" +
+                        "  _____             " +
+                        "          _       \r" +
+                        "\n" +
+                        " |  __ \\           " +
+                        "          | |      " +
+                        "\r\n" +
+                        " | |__) |___ _ __   " +
+                        "___  _ __| |_ ___ \r" +
+                        "\n" +
+                        " |  _  // _ \\ \'_ " +
+                        "\\ / _ \\| \'__| __/" +
+                        " __|\r\n" +
+                        " | | \\ \\  __/ |_) " +
+                        "| (_) | |  | |_\\__ " +
+                        "\\\r\n" +
+                        " |_|  \\_\\___| .__/" +
+                        " \\___/|_|   \\__|__" +
+                        "_/\r\n" +
+                        "            | |     " +
+                        "                  \r" +
+                        "\n" +
+                        "            |_|     " +
+                        "                  \r" +
+                        "\n";
+                O1: do {
+                    clearConsole();
+                    System.out.println(reportsHeader);
+                    System.out.println(
+                            "_________________________________________________________________________________");
+
+                    System.out.println("\t[1] Customer Reports");
+                    System.out.println("\t[2] Item Reports");
+                    System.out.println("\t[3] Order Reports");
+
+                    System.out.print("\nEnter an option : ");
+                    int reportOptions = input.nextInt();
+
+                    if (reportOptions == 1) {
+                        String customerReportsHeader = "\r\n" +
+                                "   _____          _ " +
+                                "                    " +
+                                "         _____      " +
+                                "                 _  " +
+                                "     \r\n" +
+                                "  / ____|        | |" +
+                                "                    " +
+                                "        |  __ \\    " +
+                                "                 | |" +
+                                "      \r\n" +
+                                " | |    _   _ ___| |" +
+                                "_ ___  _ __ ___   __" +
+                                "_ _ __  | |__) |___ " +
+                                "_ __   ___  _ __| |_" +
+                                " ___ \r\n" +
+                                " | |   | | | / __| _" +
+                                "_/ _ \\| \'_ ` _ \\ " +
+                                "/ _ \\ \'__| |  _  /" +
+                                "/ _ \\ \'_ \\ / _ \\" +
+                                "| \'__| __/ __|\r\n" +
+                                " | |___| |_| \\__ \\" +
+                                " || (_) | | | | | | " +
+                                " __/ |    | | \\ \\ " +
+                                " __/ |_) | (_) | |  " +
+                                "| |_\\__ \\\r\n" +
+                                "  \\_____\\__,_|___/" +
+                                "\\__\\___/|_| |_| |_" +
+                                "|\\___|_|    |_|  \\" +
+                                "_\\___| .__/ \\___/|" +
+                                "_|   \\__|___/\r\n" +
+                                "                    " +
+                                "                    " +
+                                "                   |" +
+                                " |                  " +
+                                "     \r\n" +
+                                "                    " +
+                                "                    " +
+                                "                   |" +
+                                "_|                  " +
+                                "     \r\n";
+                        O1L1: do {
+                            clearConsole();
+                            System.out.println(customerReportsHeader);
+                            System.out.println(
+                                    "_________________________________________________________________________________");
+                            System.out.println("\t[1] Best in Customers");
+                            System.out.println("\t[2] View Customers");
+                            System.out.println("\t[3] All Customer Report");
+
+                            
+                        } while (true);
+
+                    }
+                } while (true);
+
             } else if (mainMenuNum == 5) {
                 String orderStatusHeader = "   ____          _  " +
                         "            _____ _ " +
