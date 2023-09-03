@@ -16,6 +16,7 @@ class Test {
         int qty;
         String orderID;
         String status;
+        int count = 1;
         String mainHeader = "\r\n" +
                 " /$$$$$$$$          " +
                 "       /$$       /$$" +
@@ -97,7 +98,6 @@ class Test {
             System.out.print("\n\t\t\tInput Option : ");
             int mainMenuNum = input.nextInt();
             if (mainMenuNum == 1) {
-                int count = 1;
                 M1L1: do {
                     String padded = String.format("%05d", count);
                     orderID = "ODR#" + padded;
@@ -191,11 +191,10 @@ class Test {
                             odrStatus = increaseStrArraySize(odrStatus);
                             odrStatus[count - 1] = "Processing";
                             System.out.println("\tOrder Placed..!");
-
+                            count++;
                             System.out.print("Do you want to place another order? (y/n) : ");
                             String anotherOrderPlace = input.next();
                             if (anotherOrderPlace.equalsIgnoreCase("y")) {
-                                count++;
                                 continue M1L1;
                             } else {
                                 clearConsole();
@@ -477,7 +476,7 @@ class Test {
                     System.out.println(
                             "_________________________________________________________________________________");
 
-                    System.out.print("Enter Order ID \t\t:\t");
+                    System.out.print("\nEnter Order ID \t\t:\t");
                     orderID = input.next();
 
                     int position = 0;
@@ -498,8 +497,8 @@ class Test {
 
                     }
                     if (odrID.length == noCountArr.length) {
-                        System.out.println("\tInvalid Order ID..... Try Again");
-                        System.out.print("Do you want to search order ID again ? (y/n) : ");
+                        System.out.println("\n\tInvalid Order ID..... Try Again");
+                        System.out.print("\nDo you want to search order ID again ? (y/n) : ");
                         String checkStr = input.next();
                         if (checkStr.equalsIgnoreCase("y")) {
                             continue M1;
@@ -521,13 +520,13 @@ class Test {
                     System.out.println("Status\t\t:\t" + status);
 
                     if (status.equalsIgnoreCase("Processing")) {
-                        System.out.print("Do you want to change this order status ? (y/n) : ");
+                        System.out.print("\nDo you want to change this order status ? (y/n) : ");
                         String checkOrderStstusChange = input.next();
                         ML1: do {
                             if (checkOrderStstusChange.equalsIgnoreCase("y")) {
                                 System.out.println("\n\t[1] Order Delivering");
                                 System.out.println("\n\t[2] Order Delivered");
-                                System.out.print("Enter an option : ");
+                                System.out.print("\nEnter an option : ");
                                 int changeItem = input.nextInt();
                                 if (changeItem == 1) {
                                     odrStatus[position] = "Order Delivering";
@@ -549,10 +548,41 @@ class Test {
                             }
                         } while (true);
 
+                    } else if (status.equalsIgnoreCase("Order Delivering")) {
+                        System.out.print("\nDo you want to change this order status ? (y/n) : ");
+                        String checkOrderStstusChange = input.next();
+                        ML2: do {
+                            if (checkOrderStstusChange.equalsIgnoreCase("y")) {
+                                System.out.println("\n\t[1] Order Delivered");
+                                System.out.print("\nEnter an option : ");
+                                int changeItem = input.nextInt();
+                                if (changeItem == 1) {
+                                    odrStatus[position] = "Order Delivered";
+                                    break;
+                                } else {
+                                    // Move the cursor up 3 lines
+                                    System.out.print("\033[1A");
+                                    // Clear the lines
+                                    System.out.print("\033[0J");
+                                    System.out.println("\tInvalid Input...");
+                                    continue ML2;
+                                }
+                            } else {
+                                continue L1;
+                            }
+                        } while (true);
+                    } else {
+                        System.out.print("\nDo you want to change this order status ? (y/n) : ");
+                        String checkOrderStstusChange = input.next();
+                        if (checkOrderStstusChange.equalsIgnoreCase("y")) {
+                            System.out.print("\nCan't change this order status, Order already delivered...!");
+                        } else {
+                            continue L1;
+                        }
                     }
 
                     do {
-                        System.out.print("Do you want to search another order ? (y/n) : ");
+                        System.out.print("\n\nDo you want to search another order ? (y/n) : ");
                         String checkReSearchPhone = input.next();
                         if (checkReSearchPhone.equalsIgnoreCase("y")) {
                             continue M1;
@@ -564,6 +594,108 @@ class Test {
                 } while (true);
 
             } else if (mainMenuNum == 6) {
+                String deleteOrderHeader = "\r\n" +
+                        "  _____       _     " +
+                        " _          ____    " +
+                        "      _           \r" +
+                        "\n" +
+                        " |  __ \\     | |   " +
+                        " | |        / __ \\ " +
+                        "       | |          " +
+                        "\r\n" +
+                        " | |  | | ___| | ___" +
+                        "| |_ ___  | |  | |_ " +
+                        "__ __| | ___ _ __ \r" +
+                        "\n" +
+                        " | |  | |/ _ \\ |/ _" +
+                        " \\ __/ _ \\ | |  | " +
+                        "| \'__/ _` |/ _ \\ " +
+                        "\'__|\r\n" +
+                        " | |__| |  __/ |  __" +
+                        "/ ||  __/ | |__| | |" +
+                        " | (_| |  __/ |   \r" +
+                        "\n" +
+                        " |_____/ \\___|_|\\_" +
+                        "__|\\__\\___|  \\___" +
+                        "_/|_|  \\__,_|\\___|" +
+                        "_|   \r\n" +
+                        "                    " +
+                        "                    " +
+                        "                  ";
+                N1: do {
+                    clearConsole();
+                    System.out.println(deleteOrderHeader);
+                    System.out.println(
+                            "_________________________________________________________________________________");
+
+                    System.out.print("\nEnter Order ID \t\t:\t");
+                    orderID = input.next();
+
+                    int position = 0;
+                    int nCnt = 1;
+                    noCountArr = new int[0];
+
+                    for (int i = 0; i < odrID.length; i++) {
+                        if (!(odrID[i].contains(orderID))) {
+                            noCountArr = increaseIntArraySize(noCountArr);
+                            noCountArr[nCnt - 1] = i;
+                            nCnt++;
+                        } else {
+                            if (odrID[i].equalsIgnoreCase(orderID)) {
+                                position = i;
+                                break;
+                            }
+                        }
+
+                    }
+                    if (odrID.length == noCountArr.length) {
+                        System.out.println("\n\tInvalid Order ID..... Try Again");
+                        System.out.print("\nDo you want to search order ID again ? (y/n) : ");
+                        String checkStr = input.next();
+                        if (checkStr.equalsIgnoreCase("y")) {
+                            continue N1;
+                        } else {
+                            continue L1;
+                        }
+                    }
+
+                    phoneNumber = phoneNo[position];
+                    tshirtSize = tSizes[position];
+                    qty = qt[position];
+                    int amount = calculateAmount(tshirtSize, qty);
+                    status = odrStatus[position];
+
+                    System.out.println("\nPhone Number\t:\t" + phoneNumber);
+                    System.out.println("Size\t\t:\t" + tshirtSize);
+                    System.out.println("QTY\t\t:\t" + qty);
+                    System.out.println("Amount\t\t:\t" + amount);
+                    System.out.println("Status\t\t:\t" + status);
+
+                    System.out.print("\nDo you want to delete this order ? (y/n) : ");
+                    String checkOrderDelete = input.next();
+
+                    if (checkOrderDelete.equalsIgnoreCase("y")) {
+                        odrID = decreaseStrArraySize(odrID, position);
+                        phoneNo = decreaseStrArraySize(phoneNo, position);
+                        tSizes = decreaseStrArraySize(tSizes, position);
+                        odrStatus = decreaseStrArraySize(odrStatus, position);
+                        qt = decreaseIntArraySize(qt, position);
+                        System.out.println("\n\tOrder Deleted...!");
+                    } else {
+                        continue L1;
+                    }
+
+                    do {
+                        System.out.print("\n\nDo you want to delete another order ? (y/n) : ");
+                        String checkReDeleteOrder = input.next();
+                        if (checkReDeleteOrder.equalsIgnoreCase("y")) {
+                            continue N1;
+                        } else {
+                            continue L1;
+                        }
+                    } while (true);
+
+                } while (true);
 
             } else {
                 continue L1;
@@ -622,5 +754,27 @@ class Test {
         }
         original = temp;
         return original;
+    }
+
+    public static String[] decreaseStrArraySize(String[] original, int element) {
+        String[] anotherArray = new String[original.length - 1];
+        for (int i = 0, k = 0; i < original.length; i++) {
+            if (i == element) {
+                continue;
+            }
+            anotherArray[k++] = original[i];
+        }
+        return anotherArray;
+    }
+
+    public static int[] decreaseIntArraySize(int[] original, int element) {
+        int[] anotherArray = new int[original.length - 1];
+        for (int i = 0, k = 0; i < original.length; i++) {
+            if (i == element) {
+                continue;
+            }
+            anotherArray[k++] = original[i];
+        }
+        return anotherArray;
     }
 }
